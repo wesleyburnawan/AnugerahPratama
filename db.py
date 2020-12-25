@@ -15,7 +15,7 @@ def createUserTable():
         CREATE TABLE IF NOT EXISTS users (
             username VARCHAR(100) NOT NULL PRIMARY KEY, 
             password TEXT NOT NULL
-        ) 
+        )
         """
     cursor.execute(query)
 
@@ -23,8 +23,26 @@ def deleteUserTable():
     query = "DROP TABLE users"
     cursor.execute(query) 
 
+def createUser(userID, passwords):
+    query = """
+        INSERT INTO users(username, password)
+        VALUES('""" + userID + "','" + passwords + "')"
+    cursor.execute(query)
+    mydb.commit()
+
+def deleteUser(userID):
+    query = """
+        DELETE FROM users
+        WHERE username = '""" + userID + "'"
+    cursor.execute(query)
+    mydb.commit()
+
+
+
+
+
 """
-build function :createUser, deleteUser, updateUser, login, 
+build function : updateUser, login, 
 store user password mysql
 build git branch, commit, push
 """
