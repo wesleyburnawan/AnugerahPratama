@@ -37,6 +37,16 @@ def deleteUser(userID):
     cursor.execute(query)
     mydb.commit()
 
+def updateUser(oldUserID, newPassword):
+    query = """
+        UPDATE users
+        SET 
+            password = '""" + newPassword + "'" + """
+        WHERE username = '""" + oldUserID + "'"
+    print(query)
+    cursor.execute(query)
+    mydb.commit()
+        
 
 
 
