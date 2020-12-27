@@ -37,12 +37,12 @@ def deleteUser(userID):
     cursor.execute(query)
     mydb.commit()
 
-def updateUser(oldUserID, newPassword):
+def updateUser(UserID, newPassword):
     query = """
         UPDATE users
         SET 
             password = '""" + newPassword + "'" + """
-        WHERE username = '""" + oldUserID + "'"
+        WHERE username = '""" + UserID + "'"
     print(query)
     cursor.execute(query)
     mydb.commit()
@@ -52,7 +52,6 @@ def updateUser(oldUserID, newPassword):
 
 
 """
-build function : updateUser, login, 
-store user password mysql
+build function : login, store user password mysql
 build git branch, commit, push
 """
