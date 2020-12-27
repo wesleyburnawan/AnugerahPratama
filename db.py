@@ -1,11 +1,13 @@
 import mysql.connector
+import config 
 
 mydb = mysql.connector.connect(
   host="anugerahpratamadb.cfdze5qbk9tk.ap-southeast-1.rds.amazonaws.com",
   user="wesleyburnawan",
-  password="Basketball55$",
+  password = config.dbPassword,
   port = 3306,
-  db = "anugerah_pratama"
+  db = "anugerah_pratama",
+  autocommit = True
 )
 
 cursor = mydb.cursor()
@@ -23,29 +25,41 @@ def deleteUserTable():
     query = "DROP TABLE users"
     cursor.execute(query) 
 
-def createUser(userID, passwords):
+def createUser(userID, password):
     query = """
         INSERT INTO users(username, password)
-        VALUES('""" + userID + "','" + passwords + "')"
-    cursor.execute(query)
-    mydb.commit()
+        VALUES(%(username)s, %(password)s)
+        """
+    userInfo = {
+        "username": userID, 
+        "password": password
+    }
+    cursor.execute(query, userInfo)
 
 def deleteUser(userID):
     query = """
         DELETE FROM users
-        WHERE username = '""" + userID + "'"
-    cursor.execute(query)
-    mydb.commit()
+        WHERE username = %(username)s
+        """
+    userInfo = {
+        "username": userID
+    }
+    cursor.execute(query, userInfo)
 
-def updateUser(UserID, newPassword):
+def updateUser(oldUserID, newUserID, newPassword):
     query = """
         UPDATE users
         SET 
-            password = '""" + newPassword + "'" + """
-        WHERE username = '""" + UserID + "'"
-    print(query)
-    cursor.execute(query)
-    mydb.commit()
+            password = %(newPassword)s,
+            username = %(newUserID)s
+        WHERE username = %(oldUserID)s
+        """
+    userInfo = {
+        "newPassword": newPassword,
+        "newUserID": newUserID,
+        "oldUserID": oldUserID
+    }
+    cursor.execute(query, userInfo)
         
 
 
