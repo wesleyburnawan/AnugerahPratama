@@ -62,5 +62,3 @@ def updateUser(oldUserID, newUserID, newPassword):
     cursor.execute(query, userInfo)
         
 
-
-
