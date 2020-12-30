@@ -34,3 +34,12 @@ def updateUserRequest():
         return resp, 404
     return resp, 200
 
+@app.route('/users/login', methods=['POST', 'GET'])
+def loginRequest(): #need work
+    try:
+        data = request.get_json(force=True)
+        resp = jsonify({})
+        account = db.login(data['username'],data['password'])
+    except:
+        return resp, 404
+    return resp, 200
