@@ -1,5 +1,5 @@
 import mysql.connector
-import config 
+from . import config 
 
 mydb = mysql.connector.connect(
   host="anugerahpratamadb.cfdze5qbk9tk.ap-southeast-1.rds.amazonaws.com",
@@ -64,8 +64,3 @@ def updateUser(oldUserID, newUserID, newPassword):
 
 
 
-
-"""
-build function : login, store user password mysql
-build git branch, commit, push
-"""
