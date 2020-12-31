@@ -61,16 +61,14 @@ def updateUser(oldUserID, newUserID, newPassword):
     }
     cursor.execute(query, userInfo)
         
-def login(userID, password): #need work
+def login(userID): 
     query = """
-        SELECT * FROM users 
+        SELECT password FROM users 
         WHERE
-            username = %(username)s AND
-            password = %(password)s
+            username = %(username)s
         """
     userInfo = {
-        "username": userID, 
-        "password": password
+        "username": userID
     }
     cursor.execute(query, userInfo)
     return cursor.fetchone()

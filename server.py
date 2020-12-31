@@ -4,7 +4,7 @@ from flask import jsonify
 from . import db
 app = Flask(__name__)
 
-@app.route('/users/create', methods=['POST'])
+@app.route('/users', methods=['POST'])
 def createUserRequest():
     try:
         data = request.get_json(force=True)
@@ -12,34 +12,36 @@ def createUserRequest():
         db.createUser(data['username'], data['password'])
     except:
         return resp, 409
-    return resp, 200 #or 201
+    return resp, 200 
 
-@app.route('/users/delete', methods=['POST'])
-def deleteUserRequest():
+@app.route('/users/<username>', methods=['DELETE']) 
+def deleteUserRequest(username):
     try:
         data = request.get_json(force=True)
         resp = jsonify({})
-        db.deleteUser(data['username'])
+        db.deleteUser(username)
     except:
-        return resp,404
+        return resp, 409
     return resp, 200
 
-@app.route('/users/update', methods=['POST'])
-def updateUserRequest():
+@app.route('/users/<username>', methods=['PUT'])
+def updateUserRequest(username):
     try:
         data = request.get_json(force=True)
         resp = jsonify({})
-        db.updateUser(data['oldUsername'], data['newUsername'], data['newPassword'])
+        db.updateUser(username, data['username'], data['password'])
     except:
-        return resp, 404
+        return resp, 409
     return resp, 200
 
-@app.route('/users/login', methods=['POST', 'GET'])
-def loginRequest(): #need work
+@app.route('/login', methods=['GET'])
+def loginRequest(): 
     try:
         data = request.get_json(force=True)
         resp = jsonify({})
-        account = db.login(data['username'],data['password'])
+        inputPassword = db.login(data['username'])
+        if inputPassword[0] != data['password']:
+            return resp, 401
     except:
-        return resp, 404
+        return resp, 409
     return resp, 200
